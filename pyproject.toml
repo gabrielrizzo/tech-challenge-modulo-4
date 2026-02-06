@@ -1,0 +1,14 @@
+[project]
+name = "tech-challenge-modulo-4"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "flask>=3.1.2",
+    "grandalf>=0.8",
+    "langchain>=1.2.7",
+    "langchain-openai>=1.1.7",
+    "langgraph>=1.0.7",
+    "python-dotenv>=1.2.1",
+]
