@@ -90,6 +90,9 @@ def analyse_psicological_issue():
     data = request.get_json()
     text_to_analyse = data.get('text')
 
+    if not text_to_analyse:
+        return jsonify({"error": "text é obrigatório"}), 400
+
     resume = analyse_woman_psicological_issue(text_to_analyse)
 
     return resume, 200
