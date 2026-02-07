@@ -49,29 +49,10 @@ def analyse_woman_psicological_issue(text):
 
     It should analyse and indicate the confiability of the analysis
     """
-    client_config = get_openrouter_client()
+    prompt = PromptTemplate.from_template(PSYCOLOGICAL_ANALYSIS)
 
-    prompt_text = PSYCOLOGICAL_ANALYSIS.replace("{text_to_analyse}", text)
+    llm = get_openrouter_client(temperature=0.5)
+    chain = prompt | llm
+    result = chain.invoke({"text_to_analyse": text})
 
-    payload = {
-        "model": "openai/gpt-4o",
-        "messages": [
-            {
-                "role": "user",
-                "content": prompt_text
-            }
-        ],
-        "response_format": {"type": "json_object"}
-    }
-
-    response = requests.post(
-        url=client_config["base_url"],
-        headers=client_config["headers"],
-        data=json.dumps(payload)
-    )
-
-    response.raise_for_status()
-    result = response.json()
-    content = result["choices"][0]["message"]["content"]
-
-    return jsonify(json.loads(content))
+    return jsonify(json.loads(result.content))
