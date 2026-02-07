@@ -6,7 +6,17 @@ PSYCOLOGICAL_ANALYSIS = """
         You are an assistant performing NON-DIAGNOSTIC psychological text analysis for a certified psychologist.
 
         TASK
-        Analyze the following text written by a woman. Identify emotional/mental-health *signals* strictly based on the text. Do NOT diagnose. Provide a reliability ("confiability") score and justify it.
+        Analyze the following text written by a person. Identify emotional/mental-health *signals* strictly based on the text. Do NOT diagnose. Provide a reliability ("confiability") score and justify it.
+        Use the emotion input and the text analysed to suggest a recommendation to help the person.
+
+        EXAMPLES
+        
+        emotion: angry
+        recommendation : Breath deep using your nose and count to 10. After that, release the breath through your mouth
+
+        emotion: sad
+        recommendation : Call to a helping center for depression to talk about your issues. Try to spend more time in outdoor activities
+
 
         NON-NEGOTIABLE RULES
         1) Always include a disclaimer stating: this is only an analysis and must be used by a certified psychologist to provide any diagnosis.
@@ -15,7 +25,7 @@ PSYCOLOGICAL_ANALYSIS = """
         If any user-provided example places conclusions first, reverse the order and keep evidence-first.
         4) Risk handling: If the text suggests self-harm/suicidality/violence/imminent danger as possible or likely, include an urgent recommended action to seek immediate professional help (without diagnosing).
         5) Output MUST be valid JSON ONLY (no markdown, no extra text).
-        6) Should remove any sensitive data about the woman, that could lead to privacy or identificate the woman
+        6) Should remove any sensitive data about the person, that could lead to privacy or identificate the person
 
         OUTPUT FORMAT (JSON ONLY; follow this schema exactly)
         {{
@@ -51,7 +61,8 @@ PSYCOLOGICAL_ANALYSIS = """
         }},
         "follow_up_questions_for_clinician": [
             "string (3–8 questions a psychologist could ask)"
-        ]
+        ],
+        recommendation: "string"
         }}
 
         COMPLETENESS CHECK (DO INTERNALLY BEFORE OUTPUT)
@@ -62,4 +73,7 @@ PSYCOLOGICAL_ANALYSIS = """
 
         INPUT TEXT (analyze this):
         <<<{text_to_analyse}>>>
+
+        EMOTION (analyze this):
+        <<<{emotion_to_analyse}>>>
     """

@@ -1,6 +1,6 @@
 from flask import request, Flask, jsonify
 from dotenv import load_dotenv
-from agents import analyse_woman_psicological_issue
+from agents import analyse_psicological_issue
 import os
 from datetime import datetime
 import importlib
@@ -77,18 +77,6 @@ def health_check():
             "error": str(e)
         }), 500
 
-@app.route('/analyse-psycological-issue', methods=['POST'])
-def analyse_psicological_issue():
-    data = request.get_json()
-    text_to_analyse = data.get('text')
-
-    if not text_to_analyse:
-        return jsonify({"error": "text é obrigatório"}), 400
-
-    resume = analyse_woman_psicological_issue(text_to_analyse)
-
-    return resume, 200
-
 @app.route('/transcribe-audio', methods=['POST'])
 def transcribe_audio():
     data = request.get_json()
@@ -141,7 +129,7 @@ def analyse_patient_psychological_issue():
     transcription = response_data.get('transcription', '') if isinstance(response_data, dict) else ''
 
     emotion_result = predict_emotion_from_base64(audio_data, audio_format)
-    psychological_response = analyse_woman_psicological_issue(transcription)
+    psychological_response = analyse_psicological_issue(transcription, emotion_result)
     psychological_data = psychological_response.get_json() if hasattr(psychological_response, 'get_json') else psychological_response
 
     return jsonify({
