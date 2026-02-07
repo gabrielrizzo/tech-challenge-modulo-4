@@ -2,7 +2,7 @@ import os
 from langchain_openai import ChatOpenAI
 
 
-def get_openrouter_client(temperature: float = 0.7):
+def get_openrouter_client(temperature: float = 0.7, model_kwargs: dict = {}):
     """
     Returns a configured OpenRouter LangChain client for chat/chain usage (gpt-4o).
     """
@@ -12,6 +12,7 @@ def get_openrouter_client(temperature: float = 0.7):
         streaming=True,
         api_key=os.getenv("OPENROUTER_API_KEY"),
         base_url="https://openrouter.ai/api/v1",
+        model_kwargs=model_kwargs,
         default_headers={
             "HTTP-Referer": "https://your-site.com",
             "X-Title": "My LangChain App"

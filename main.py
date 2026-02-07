@@ -1,13 +1,14 @@
 from flask import request, Flask, jsonify
 from dotenv import load_dotenv
-from agents import resume_text, analyse_woman_psicological_issue
+from agents import analyse_woman_psicological_issue
 import os
 from datetime import datetime
 import importlib
 audio_analyser = importlib.import_module("agents.audio-analyser")
 transcribe_audio_file = audio_analyser.transcribe_audio
 analyse_audio_psicological_issue = audio_analyser.analyse_audio_psicological_issue
-
+emotion_analyser = importlib.import_module("agents.emotion-analyser")
+predict_emotion_from_base64 = emotion_analyser.predict_emotion_from_base64
 load_dotenv()
 app = Flask(__name__)
 
@@ -76,15 +77,6 @@ def health_check():
             "error": str(e)
         }), 500
 
-@app.route('/resume', methods=['POST'])
-def resume_text_with_llm():
-    data = request.get_json()
-    text_to_resume = data.get('text')
-
-    resume = resume_text(text_to_resume)
-
-    return resume, 200
-
 @app.route('/analyse-psycological-issue', methods=['POST'])
 def analyse_psicological_issue():
     data = request.get_json()
@@ -120,6 +112,43 @@ def analyse_audio_psicological_issue_route():
 
     result = analyse_audio_psicological_issue(audio_data, audio_format)
     return result
+
+@app.route('/predict-emotion', methods=['POST'])
+def predict_emotion():
+    data = request.get_json()
+    audio_data = data.get('audio_data')
+    audio_format = data.get('audio_format', 'wav')
+
+    if not audio_data:
+        return jsonify({"error": "audio_data é obrigatório"}), 400
+    result = predict_emotion_from_base64(audio_data, audio_format)
+    return jsonify({ "emotion": result })
+
+@app.route('/analyse-patient-psychological-issue', methods=['POST'])
+def analyse_patient_psychological_issue():
+    data = request.get_json()
+    audio_data = data.get('audio_data')
+    audio_format = data.get('audio_format', 'wav')
+
+    if not audio_data:
+        return jsonify({"error": "audio_data é obrigatório"}), 400
+
+    result = transcribe_audio_file(audio_data, audio_format)
+    # transcribe_audio_file returns a Flask Response or (Response, status_code) on error
+    if isinstance(result, tuple):
+        return result
+    response_data = result.get_json()
+    transcription = response_data.get('transcription', '') if isinstance(response_data, dict) else ''
+
+    emotion_result = predict_emotion_from_base64(audio_data, audio_format)
+    psychological_response = analyse_woman_psicological_issue(transcription)
+    psychological_data = psychological_response.get_json() if hasattr(psychological_response, 'get_json') else psychological_response
+
+    return jsonify({
+        "resume": psychological_data,
+        "emotion": emotion_result,
+        "transcription": transcription
+    })
 
 
 if __name__ == '__main__':
