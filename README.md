@@ -53,7 +53,7 @@ python main.py
 Ou, caso você prefira usar o `uv` diretamente:
 
 ```bash
-uv run python main.py
+uv run main.py
 ```
 
 ### Variáveis de ambiente
