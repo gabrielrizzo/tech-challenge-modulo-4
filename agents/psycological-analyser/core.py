@@ -4,8 +4,7 @@ from flask import jsonify
 from langchain_core.prompts import PromptTemplate
 from clients import get_open_ai_client
 from clients.openrouter import get_openrouter_client
-from .prompts import PSYCOLOGICAL_ANALYSIS
-
+from agents.prompts import PSYCOLOGICAL_ANALYSIS
 
 def resume_text(text_to_resume):
     """
