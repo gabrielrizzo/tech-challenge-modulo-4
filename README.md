@@ -58,11 +58,72 @@ uv run python main.py
 
 ### Variáveis de ambiente
 
-Caso o projeto use variáveis de ambiente (por exemplo, chaves de API para modelos), crie um arquivo `.env` na raiz do projeto e defina as chaves necessárias, por exemplo:
+Crie um arquivo `.env` na raiz do projeto com as seguintes chaves:
 
 ```bash
-OPENAI_API_KEY="sua_chave_aqui"
+OPEN_AI_API_KEY="sua_chave_openai"
+OPENROUTER_API_KEY="sua_chave_openrouter"
 ```
 
-Consulte o código (por exemplo `main.py` e a pasta `agents/`) para ver quais variáveis são esperadas.
+### Endpoints da API
+
+A API roda por padrão em `http://localhost:5001`.
+
+#### Sistema
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/` | Informações sobre a API e endpoints disponíveis |
+| GET | `/health` | Health check com status das dependências |
+
+#### Análise de Texto
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST | `/resume` | Resume textos usando IA |
+| POST | `/analyse-psycological-issue` | Análise psicológica NÃO-DIAGNÓSTICA de textos |
+
+**Exemplo de uso:**
+
+```bash
+curl -X POST http://localhost:5001/resume \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Seu texto aqui..."}'
+```
+
+#### Análise de Áudio
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST | `/transcribe-audio` | Transcreve áudio para texto |
+| POST | `/analyse-audio-psycological-issue` | Análise psicológica NÃO-DIAGNÓSTICA de áudio |
+
+**Parâmetros:**
+
+- `audio_data` (obrigatório): Áudio codificado em base64
+- `audio_format` (opcional): Formato do áudio (`wav` ou `mp3`). Default: `wav`
+
+**Exemplo de uso:**
+
+```bash
+# Converter áudio para base64
+AUDIO_BASE64=$(base64 -i seu_audio.wav)
+
+# Transcrever áudio
+curl -X POST http://localhost:5001/transcribe-audio \
+  -H "Content-Type: application/json" \
+  -d "{\"audio_data\": \"$AUDIO_BASE64\", \"audio_format\": \"wav\"}"
+
+# Análise psicológica de áudio
+curl -X POST http://localhost:5001/analyse-audio-psycological-issue \
+  -H "Content-Type: application/json" \
+  -d "{\"audio_data\": \"$AUDIO_BASE64\", \"audio_format\": \"wav\"}"
+```
+
+### Tecnologias
+
+- Flask
+- LangChain / LangGraph
+- OpenAI (GPT-4o)
+- OpenRouter (GPT-4o Audio Preview)
 
