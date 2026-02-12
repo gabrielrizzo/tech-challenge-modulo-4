@@ -129,7 +129,7 @@ curl -X POST http://localhost:5001/analyse-audio-psycological-issue \
 
 ### Audios utilizados para teste
 
-Segue a relação dos base64 com a origem:
+Segue a relação dos base64 com a origem dos audios utilizados contidos no diretório `audios`:
 
 [https://www.youtube.com/watch?v=dwfTKWKc2so](https://www.youtube.com/watch?v=dwfTKWKc2so) -> base64-pt-br-fearful.txt
 
