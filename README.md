@@ -127,3 +127,18 @@ curl -X POST http://localhost:5001/analyse-audio-psycological-issue \
 - OpenAI (GPT-4o)
 - OpenRouter (GPT-4o Audio Preview)
 
+### Audios utilizados para teste
+
+Segue a relação dos base64 com a origem:
+
+[https://www.youtube.com/watch?v=dwfTKWKc2so](https://www.youtube.com/watch?v=dwfTKWKc2so) -> base64-pt-br-fearful.txt
+
+[https://www.youtube.com/watch?v=I9thtEjSb44&t=91s](https://www.youtube.com/watch?v=I9thtEjSb44&t=91s) -> base64-pt-br-sad.txt
+
+[https://www.youtube.com/watch?v=Hd2GBfneepk&list=PLxlQ6wmJ-XT_alzF3TnfhnnhZgWqH3GRH](https://www.youtube.com/watch?v=Hd2GBfneepk&list=PLxlQ6wmJ-XT_alzF3TnfhnnhZgWqH3GRH) -> base64-pt-br-angry.txt
+
+[https://www.youtube.com/watch?v=CBPBsKs1E04](https://www.youtube.com/watch?v=CBPBsKs1E04) -> base64-pt-br-angry-2.txt
+
+[Link dataset que geramos no Huggin Face](https://datasets-server.huggingface.co/cached-assets/brunoretiro/womanhealthfiap/--/3441b0d17d337325e1fdb799602c8f193890a1e5/--/default/train/0/audio/audio.mp3?Expires=1770861449&Signature=q61Y1MNtrH9PlhI-3hF67U~w2fgDY8Q88klQ5tmEwt3-WDVKk0COQ6ifMcMHuHahrWlc6Tv12J4lDkUhH0en~9vNKGKCzmLP~7bTALGQOXB7knzr4Xf5fJixuHB3y8Ygj1POaNiVd1tT8bSbkBIL16IEU4TywT64jTwzr~9Qct58E7qb2FvxkHWR0EVjgEsm6tS8V-ZaIyb7wesy3mTE6mOyr~hPtHTpFsNvCqgWQt-jiejwwTnVwivxBiWkXYAPrwn6~mw~v85ofuoB42JG~bDSjn0OEYF-IH2RdyG-SxG5b3zyeKLgQUsfvfz3emXppwkfFsZhxfFomjWnyE7xFw__&Key-Pair-Id=K3EI6M078Z3AC3) -> base64-en-neutral.txt
+
+
