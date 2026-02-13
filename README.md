@@ -1,4 +1,4 @@
-# 🧠 Análise de Sentimentos em Áudios de Consultas Psicológicas
+#  Análise de Sentimentos em Áudios de Consultas Psicológicas
 
 > **IA para Dev — Fase 4 | Tech Challenge FIAP**
 
