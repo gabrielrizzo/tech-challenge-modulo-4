@@ -4,7 +4,7 @@
 
 API REST multimodal que recebe áudios de consultas psicológicas, transcreve o conteúdo, classifica emoções na fala e gera análises psicológicas não-diagnósticas estruturadas em JSON — tudo orquestrado via LangChain/LangGraph.
 
-## 👥 Equipe
+## Equipe
 
 | Nome | RM |
 |------|-----|
@@ -16,7 +16,7 @@ API REST multimodal que recebe áudios de consultas psicológicas, transcreve o 
 
 ---
 
-## 🏗️ Arquitetura
+## Arquitetura
 
 A solução é uma **API REST** desenvolvida com Flask (Python 3.10+), exposta na porta `5001`, que recebe áudios codificados em base64 e executa um pipeline multimodal de análise. A orquestração dos modelos de IA é feita via **LangChain/LangGraph**, com chamadas a provedores externos (OpenRouter) e inferência local (HuggingFace Transformers + PyTorch).
 
@@ -42,7 +42,7 @@ O resultado final agrega as três saídas em um único payload JSON contendo: `t
 
 ---
 
-## 📡 Endpoints da API
+## Endpoints da API
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
@@ -55,7 +55,7 @@ O resultado final agrega as três saídas em um único payload JSON contendo: `t
 
 ---
 
-## 🤖 Modelos Aplicados
+## Modelos Aplicados
 
 ### Áudio → Texto (Transcrição)
 
@@ -90,7 +90,7 @@ O projeto utiliza dois provedores de LLM: **OpenAI direta** (GPT-3.5-turbo como 
 
 ---
 
-## 🧪 Resultados e Testes
+## Resultados e Testes
 
 ### Dataset de Teste
 
@@ -146,7 +146,7 @@ Todas as respostas incluem um **disclaimer obrigatório** indicando que a análi
 
 ---
 
-## 🔗 Artefatos
+## Artefatos
 
 - **Repositório GitHub:** [github.com/gabrielrizzo/tech-challenge-modulo-4](https://github.com/gabrielrizzo/tech-challenge-modulo-4)
 - **Datasets HuggingFace:**
