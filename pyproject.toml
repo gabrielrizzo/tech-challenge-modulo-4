@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "flask>=3.1.2",
+    "flask-cors>=5.0.0",
     "grandalf>=0.8",
     "langchain>=1.2.7",
     "langchain-openai>=1.1.7",

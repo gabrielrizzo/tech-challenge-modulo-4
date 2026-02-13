@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Challenge 4 - Análise Psicológica de Áudio</title>
+    <link rel="stylesheet" href="/frontend/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ Análise Psicológica de Áudio</h1>
+            <p class="subtitle">Tech Challenge Módulo 4 - FIAP</p>
+            <nav style="margin-top: 15px;">
+                <a href="/config" style="display: inline-block; padding: 10px 20px; background: rgba(99, 102, 241, 0.1); color: var(--primary-color); text-decoration: none; border-radius: 8px; border: 1px solid var(--primary-color); transition: all 0.3s ease;">
+                    🔐 Configurar Chaves de API
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Seção de Upload de Áudio -->
+            <section class="card">
+                <h2>📤 Enviar Novo Áudio</h2>
+                <div class="upload-section">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="audioFile" accept=".mp3,.wav" />
+                        <label for="audioFile" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span id="fileName">Escolher arquivo MP3 ou WAV</span>
+                        </label>
+                    </div>
+                    
+                    <div class="audio-preview" id="audioPreview" style="display: none;">
+                        <audio id="audioPlayer" controls></audio>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="transcribeBtn" class="btn btn-primary" disabled>
+                            🎯 Transcrever Áudio
+                        </button>
+                        <button id="analyseBtn" class="btn btn-secondary" disabled>
+                            🧠 Análise Psicológica
+                        </button>
+                        <button id="emotionBtn" class="btn btn-accent" disabled>
+                            😊 Detectar Emoção
+                        </button>
+                        <button id="completeAnalysisBtn" class="btn btn-complete" disabled>
+                            🔬 Análise Completa
+                        </button>
+                    </div>
+                    <p class="info-text" style="margin-top: 15px; font-size: 0.85rem;">
+                        💡 <strong>Análise Completa:</strong> Executa transcrição + detecção de emoção + análise psicológica em uma única operação
+                    </p>
+                </div>
+
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3>📊 Resultado</h3>
+                    <div class="loading" id="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Processando áudio...</p>
+                    </div>
+                    <div id="result" class="result-content"></div>
+                </div>
+            </section>
+
+            <!-- Seção de Biblioteca de Áudios -->
+            <section class="card">
+                <h2>📚 Biblioteca de Áudios</h2>
+                <p class="info-text">Áudios disponíveis na pasta "audios" do projeto</p>
+                <p class="info-text" style="font-size: 0.85rem; color: var(--warning-color);">
+                    ⚠️ Para analisar os áudios, a API precisa estar rodando em http://localhost:5001
+                </p>
+                
+                <div class="loading" id="libraryLoading">
+                    <div class="spinner"></div>
+                    <p>Carregando áudios...</p>
+                </div>
+
+                <div id="audioLibrary" class="audio-library"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>FIAP - Pós-Graduação em Inteligência Artificial | 2026</p>
+        </footer>
+    </div>
+
+    <script src="/frontend/script.js"></script>
+</body>
+</html>

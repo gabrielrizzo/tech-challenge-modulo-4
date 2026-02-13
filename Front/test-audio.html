@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Áudio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+        }
+        .test-item {
+            margin: 20px 0;
+            padding: 20px;
+            background: #334155;
+            border-radius: 8px;
+        }
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        button {
+            padding: 10px 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de Áudio - Diagnóstico</h1>
+    
+    <div class="test-item">
+        <h2>1. Teste de Conectividade com API</h2>
+        <button onclick="testAPI()">Testar API</button>
+        <div id="apiStatus"></div>
+    </div>
+
+    <div class="test-item">
+        <h2>2. Teste de Listagem de Áudios</h2>
+        <button onclick="testListAudios()">Listar Áudios</button>
+        <div id="listStatus"></div>
+    </div>
+
+    <div class="test-item">
+        <h2>3. Teste de Reprodução Direta</h2>
+        <p>Áudio via API:</p>
+        <audio controls>
+            <source src="http://localhost:5001/audio/pt-br-angry.mp3" type="audio/mpeg">
+        </audio>
+        
+        <p>Áudio via caminho relativo:</p>
+        <audio controls>
+            <source src="../audios/pt-br-angry.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="test-item">
+        <h2>4. Teste de Carregamento Dinâmico</h2>
+        <button onclick="loadAudioDynamically()">Carregar Áudio</button>
+        <div id="dynamicAudio"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const statusDiv = document.getElementById('apiStatus');
+            statusDiv.innerHTML = '<p>Testando...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5001/health');
+                const data = await response.json();
+                
+                statusDiv.innerHTML = `
+                    <div class="status success">✅ API está rodando!</div>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ Erro: ${error.message}</div>
+                    <p>Certifique-se de que a API está rodando em http://localhost:5001</p>
+                `;
+            }
+        }
+
+        async function testListAudios() {
+            const statusDiv = document.getElementById('listStatus');
+            statusDiv.innerHTML = '<p>Testando...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5001/list-audios');
+                const data = await response.json();
+                
+                statusDiv.innerHTML = `
+                    <div class="status success">✅ Listagem funcionando!</div>
+                    <p>Total de áudios: ${data.total}</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="status error">❌ Erro: ${error.message}</div>
+                `;
+            }
+        }
+
+        async function loadAudioDynamically() {
+            const div = document.getElementById('dynamicAudio');
+            div.innerHTML = '<p>Carregando...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5001/list-audios');
+                const data = await response.json();
+                
+                let html = '<div class="status success">✅ Áudios carregados dinamicamente:</div>';
+                
+                data.audios.forEach(audio => {
+                    html += `
+                        <div style="margin: 20px 0; padding: 15px; background: #475569; border-radius: 8px;">
+                            <h3>${audio.name}</h3>
+                            <audio controls preload="metadata" onloadedmetadata="console.log('Loaded: ${audio.name}')" onerror="console.error('Error loading: ${audio.name}')">
+                                <source src="http://localhost:5001/audio/${encodeURIComponent(audio.name)}" type="audio/${audio.format}">
+                            </audio>
+                            <p style="font-size: 0.85rem; color: #94a3b8;">
+                                Formato: ${audio.format} | Tamanho: ${(audio.size / 1024 / 1024).toFixed(2)} MB
+                            </p>
+                        </div>
+                    `;
+                });
+                
+                div.innerHTML = html;
+            } catch (error) {
+                div.innerHTML = `
+                    <div class="status error">❌ Erro: ${error.message}</div>
+                `;
+            }
+        }
+
+        // Adiciona listeners para debug
+        document.addEventListener('DOMContentLoaded', () => {
+            const audios = document.querySelectorAll('audio');
+            audios.forEach((audio, index) => {
+                audio.addEventListener('loadedmetadata', () => {
+                    console.log(`✅ Áudio ${index + 1} carregado com sucesso`);
+                });
+                audio.addEventListener('error', (e) => {
+                    console.error(`❌ Erro ao carregar áudio ${index + 1}:`, e);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

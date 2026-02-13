@@ -65,6 +65,22 @@ OPEN_AI_API_KEY="sua_chave_openai"
 OPENROUTER_API_KEY="sua_chave_openrouter"
 ```
 
+### Frontend Web
+
+O projeto inclui uma interface web moderna e responsiva para facilitar o uso da API.
+
+**Acesse o frontend em:** `http://localhost:5001/frontend`
+
+#### Funcionalidades do Frontend:
+- 📤 **Upload de áudio**: Envie arquivos MP3 ou WAV diretamente do navegador
+- 🎯 **Transcrição**: Converta áudio em texto
+- 🧠 **Análise Psicológica**: Análise detalhada do conteúdo
+- 😊 **Detecção de Emoção**: Identifique emoções no áudio
+- 📚 **Biblioteca de Áudios**: Acesse e analise os áudios de exemplo
+- 🎨 **Design Moderno**: Interface dark com animações suaves
+
+Para mais detalhes, consulte: [Front/README.md](Front/README.md)
+
 ### Endpoints da API
 
 A API roda por padrão em `http://localhost:5001`.
@@ -75,6 +91,9 @@ A API roda por padrão em `http://localhost:5001`.
 |--------|----------|-----------|
 | GET | `/` | Informações sobre a API e endpoints disponíveis |
 | GET | `/health` | Health check com status das dependências |
+| GET | `/frontend` | Interface web do projeto |
+| GET | `/list-audios` | Lista arquivos de áudio disponíveis |
+| GET | `/audio/<filename>` | Serve arquivo de áudio específico |
 
 #### Análise de Texto
 
@@ -97,6 +116,7 @@ curl -X POST http://localhost:5001/resume \
 |--------|----------|-----------|
 | POST | `/transcribe-audio` | Transcreve áudio para texto |
 | POST | `/analyse-audio-psycological-issue` | Análise psicológica NÃO-DIAGNÓSTICA de áudio |
+| POST | `/predict-emotion` | Detecta emoção presente no áudio |
 
 **Parâmetros:**
 

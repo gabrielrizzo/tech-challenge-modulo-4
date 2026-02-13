@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração de Chaves de IA - Tech Challenge 4</title>
+    <link rel="stylesheet" href="/frontend/config-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🔐 Configuração de Chaves de IA</h1>
+                <p class="subtitle">Tech Challenge Módulo 4 - FIAP</p>
+            </div>
+            <nav>
+                <a href="/frontend" class="nav-link">← Voltar ao App</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Status do Arquivo .env -->
+            <section class="card status-card" id="statusCard">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Verificando configurações...</p>
+                </div>
+            </section>
+
+            <!-- Formulário de Configuração -->
+            <section class="card config-card">
+                <h2>🔑 Chaves de API</h2>
+                <p class="info-text">Configure as chaves de API necessárias para o funcionamento do sistema</p>
+
+                <form id="configForm">
+                    <!-- OpenAI API Key -->
+                    <div class="form-group">
+                        <label for="openaiKey">
+                            <span class="label-icon">🤖</span>
+                            OpenAI API Key
+                            <span class="optional">(Opcional)</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="openaiKey" 
+                                name="openaiKey"
+                                placeholder="sk-..." 
+                                autocomplete="off"
+                            />
+                            <button type="button" class="toggle-visibility" onclick="toggleVisibility('openaiKey')">
+                                👁️
+                            </button>
+                        </div>
+                        <small class="help-text">
+                            Chave da OpenAI. Atualmente não está sendo utilizada no projeto.
+                            <a href="https://platform.openai.com/api-keys" target="_blank">Obter chave →</a>
+                        </small>
+                    </div>
+
+                    <!-- OpenRouter API Key -->
+                    <div class="form-group">
+                        <label for="openrouterKey">
+                            <span class="label-icon">🌐</span>
+                            OpenRouter API Key
+                            <span class="required">* Obrigatório</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="openrouterKey" 
+                                name="openrouterKey"
+                                placeholder="sk-or-v1-..." 
+                                required
+                                autocomplete="off"
+                            />
+                            <button type="button" class="toggle-visibility" onclick="toggleVisibility('openrouterKey')">
+                                👁️
+                            </button>
+                        </div>
+                        <small class="help-text">
+                            Chave do OpenRouter. <strong>Essencial</strong> para transcrição e análise de áudio.
+                            <a href="https://openrouter.ai/keys" target="_blank">Obter chave →</a>
+                        </small>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary" id="saveBtn">
+                            💾 Salvar Configurações
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="loadCurrentConfig()">
+                            🔄 Recarregar
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="clearForm()">
+                            🗑️ Limpar
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Informações sobre as Chaves -->
+            <section class="card info-card">
+                <h2>ℹ️ Informações Importantes</h2>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>🔐 Segurança</h3>
+                        <ul>
+                            <li>As chaves são armazenadas no arquivo <code>.env</code> na raiz do projeto</li>
+                            <li>O arquivo <code>.env</code> deve estar no <code>.gitignore</code></li>
+                            <li><strong>Nunca compartilhe suas chaves</strong> publicamente</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>🌐 OpenRouter (Obrigatório)</h3>
+                        <ul>
+                            <li>Usado para <strong>transcrição de áudio</strong></li>
+                            <li>Usado para <strong>análise psicológica</strong></li>
+                            <li>Modelo: GPT-4o Audio Preview</li>
+                            <li>Formato: <code>sk-or-v1-...</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>🤖 OpenAI (Opcional)</h3>
+                        <ul>
+                            <li>Atualmente <strong>não está sendo usada</strong></li>
+                            <li>Configurada para uso futuro</li>
+                            <li>Formato: <code>sk-...</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>✅ Funcionalidades</h3>
+                        <ul>
+                            <li><strong>Com OpenRouter:</strong> Todos os recursos funcionam</li>
+                            <li><strong>Sem OpenRouter:</strong> Apenas detecção de emoção funciona</li>
+                            <li>Detecção de emoção usa modelo local</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teste de Conectividade -->
+            <section class="card test-card">
+                <h2>🧪 Testar Configuração</h2>
+                <p class="info-text">Teste se as chaves estão funcionando corretamente</p>
+                
+                <div class="test-buttons">
+                    <button class="btn btn-test" onclick="testOpenRouterKey()">
+                        🌐 Testar OpenRouter
+                    </button>
+                    <button class="btn btn-test" onclick="testHealthCheck()">
+                        ❤️ Health Check da API
+                    </button>
+                </div>
+
+                <div id="testResults" class="test-results"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>FIAP - Pós-Graduação em Inteligência Artificial | 2026</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px;">
+                <strong>⚠️ Importante:</strong> Após salvar, reinicie o servidor Flask para aplicar as mudanças
+            </p>
+        </footer>
+    </div>
+
+    <script src="/frontend/config-script.js"></script>
+</body>
+</html>
