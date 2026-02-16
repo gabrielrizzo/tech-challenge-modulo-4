@@ -18,7 +18,7 @@ API REST multimodal que recebe áudios de consultas psicológicas, transcreve o 
 
 ## Arquitetura
 
-A solução é uma **API REST** desenvolvida com Flask (Python 3.10+), exposta na porta `5001`, que recebe áudios codificados em base64 e executa um pipeline multimodal de análise. A orquestração dos modelos de IA é feita via **LangChain/LangGraph**, com chamadas a provedores externos (OpenRouter) e inferência local (HuggingFace Transformers + PyTorch).
+A solução é uma **API REST** desenvolvida com Flask (Python 3.10+), exposta na porta `5001`, que recebe áudios codificados em base64 e executa um pipeline multimodal de análise. A orquestração dos modelos de IA é feita via **LangChain**, com chamadas a provedores externos (OpenRouter) e inferência local (HuggingFace Transformers + PyTorch).
 
 ### Pipeline Principal
 
@@ -136,7 +136,7 @@ Todas as respostas incluem um **disclaimer obrigatório** indicando que a análi
 | Tecnologia | Papel no Projeto |
 |------------|-----------------|
 | **Flask 3.1+** | Framework web (API REST) |
-| **LangChain / LangGraph** | Orquestração de LLMs e pipelines de prompts |
+| **LangChain** | Orquestração de LLMs e pipelines de prompts |
 | **OpenAI GPT-4o** | Análise psicológica não-diagnóstica (via OpenRouter) |
 | **GPT-4o Audio Preview** | Transcrição de áudio (via OpenRouter) |
 | **Whisper Large V3** (fine-tuned) | Classificação de emoções em fala (HuggingFace) |
