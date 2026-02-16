@@ -2,7 +2,7 @@
 
 > **IA para Dev — Fase 4 | Tech Challenge FIAP**
 
-API REST multimodal que recebe áudios de consultas psicológicas, transcreve o conteúdo, classifica emoções na fala e gera análises psicológicas não-diagnósticas estruturadas em JSON — tudo orquestrado via LangChain/LangGraph.
+API REST multimodal que recebe áudios de consultas psicológicas, transcreve o conteúdo, classifica emoções na fala e gera análises psicológicas não-diagnósticas estruturadas em JSON — tudo orquestrado via LangChain.
 
 ## Equipe
 
