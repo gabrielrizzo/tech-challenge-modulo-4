@@ -233,7 +233,7 @@ Todas as respostas incluem um **disclaimer obrigatório** indicando que a análi
 - **Datasets HuggingFace:**
   - [TTS Dataset](https://huggingface.co/datasets/brunoretiro/saude-mulher-openai-tts)
   - [Health Dataset](https://huggingface.co/datasets/brunoretiro/womanhealthfiap)
-- **Vídeo Demonstrativo:** *(inserir link do YouTube)*
+- **Vídeo Demonstrativo:** https://www.youtube.com/watch?v=tykRXqBbkhs&feature=youtu.be 
 
 ---
 
